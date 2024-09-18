@@ -40,32 +40,67 @@ function displayGraphics(playerHit = false, opponentHit = false) {
   if (opponentHit) {
     animateHit();
   } else {
-    console.log('  _______');
-    console.log(' /       \\');
-    console.log('|  0   0 |');
-    console.log('|   ---  |');
-    console.log(' \\_______/');
+    console.log("         _____  ");
+    console.log("        /     \\ ");
+    console.log("       |  O  O  |");
+    console.log("       |    >   |");
+    console.log("       |  \\_/  |");
+    console.log("        \\_____/ ");
+    console.log("         / | \\  ");
+    console.log("    ____/  |  \\___");
+    console.log("   /  _|   |   |_  \\ ");
+    console.log("  /  / |   |   | \\  \\ ");
+    console.log(" /  /  |___|___|  \\  \\ ");
+    console.log(" |  |  |       |   |  |");
+    console.log(" |__|  |       |   |__|");
+    console.log("       | \\ //  |         ");
+    console.log("       |  ---  |       ");
+    console.log("       |   /\   |     ");
+
+    
   }
 
   console.log(`${colors.green}You: ${colors.reset}`);
   if (playerHit) {
     animateHit();
   } else {
-    console.log('  _______');
-    console.log(' /       \\');
-    console.log('|  0   0 |');
-    console.log('|   ---  |');
-    console.log(' \\_______/');
+    console.log("         _____  ");
+    console.log("        /     \\ ");
+    console.log("       |  O  O  |");
+    console.log("       |    >   |");
+    console.log("       |  \\_/  |");
+    console.log("        \\_____/ ");
+    console.log("         / | \\  ");
+    console.log("    ____/  |  \\___");
+    console.log("   /  _|   |   |_  \\ ");
+    console.log("  /  / |   |   | \\  \\ ");
+    console.log(" /  /  |___|___|  \\  \\ ");
+    console.log(" |  |  |       |   |  |");
+    console.log(" |__|  |       |   |__|");
+    console.log("       | \\ //  |         ");
+    console.log("       |  ---  |       ");
+    console.log("       |   /\   |     ");
   }
 }
 
 // Hit animation for either player or opponent
 function animateHit() {
-  console.log('  _______');
-  console.log(' /       \\');
-  console.log('|  X   X |');
-  console.log('|   ---  |');
-  console.log(' \\_______/');
+  console.log("         _____  ");
+  console.log("        /     \\ ");
+  console.log("       |  X  X |");
+  console.log("       |    >  |");
+  console.log("       |  \\_/ |");
+  console.log("        \\_____/ ");
+  console.log("         / | \\  ");
+  console.log("    ____/  |  \\___");
+  console.log("   /  _|   |   |_  \\ ");
+  console.log("  /  / |   |   | \\  \\ ");
+  console.log(" /  /  |___|___|  \\  \\ ");
+  console.log(" |  |  |       |   |  |");
+  console.log(" |__|  |       |   |__|");
+  console.log("       | \\ //  |         ");
+  console.log("       |  ---  |       ");
+  console.log("       |   /\   |     ");
 }
 
 // Attack function, with stamina check and chance for special attack
