@@ -5,6 +5,14 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+const colors = {
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  reset: '\x1b[0m'
+};
+
 const opponent = {
   name: 'Mike Tyson',
   life: 100,
@@ -24,18 +32,21 @@ const player = {
   dodgeChance: 0.5 // 50% chance to dodge
 };
 
-const colors = {
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  reset: '\x1b[0m'
-};
+// Other functions remain unchanged
 
-// Display simple graphics for both opponent and player
+function gameLoop() {
+  displayStats();
+  regenStamina();
+  playerAction();
+}
+
+gameLoop();
+;
+
+
 function displayGraphics(playerHit = false, opponentHit = false) {
   console.clear();
-  
+
   console.log(`${colors.red}Opponent: ${colors.reset}`);
   if (opponentHit) {
     animateHit();
@@ -55,9 +66,7 @@ function displayGraphics(playerHit = false, opponentHit = false) {
     console.log(" |__|  |       |   |__|");
     console.log("       | \\ //  |         ");
     console.log("       |  ---  |       ");
-    console.log("       |   /\   |     ");
-
-    
+    console.log("       |   /\\  |     ");
   }
 
   console.log(`${colors.green}You: ${colors.reset}`);
@@ -79,11 +88,10 @@ function displayGraphics(playerHit = false, opponentHit = false) {
     console.log(" |__|  |       |   |__|");
     console.log("       | \\ //  |         ");
     console.log("       |  ---  |       ");
-    console.log("       |   /\   |     ");
+    console.log("       |   /\\  |     ");
   }
 }
 
-// Hit animation for either player or opponent
 function animateHit() {
   console.log("         _____  ");
   console.log("        /     \\ ");
@@ -100,15 +108,14 @@ function animateHit() {
   console.log(" |__|  |       |   |__|");
   console.log("       | \\ //  |         ");
   console.log("       |  ---  |       ");
-  console.log("       |   /\   |     ");
+  console.log("       |   /\\   |     ");
 }
 
-// Attack function, with stamina check and chance for special attack
 function attack(attacker, defender, type) {
   let staminaCost;
   let baseDamage;
-  
-  switch(type) {
+
+  switch (type) {
     case 'light':
       staminaCost = 10;
       baseDamage = Math.floor(Math.random() * (attacker.strength / 2));
@@ -130,7 +137,7 @@ function attack(attacker, defender, type) {
     console.log(`${attacker.name} is too tired to attack!`);
     return false;
   }
-  
+
   attacker.stamina -= staminaCost;
   const isSpecial = Math.random() < attacker.specialChance;
   const damage = isSpecial ? baseDamage * 2 : baseDamage;
@@ -140,7 +147,6 @@ function attack(attacker, defender, type) {
   return isSpecial;
 }
 
-// Player action - can attack or dodge
 function playerAction() {
   rl.question('Choose an action - (l)ight, (m)edium, (h)eavy, or (d)odge: ', (input) => {
     if (input === 'd') {
@@ -164,7 +170,6 @@ function playerAction() {
   });
 }
 
-// Player dodge function
 function playerDodge() {
   const dodgeCost = 20;
   if (player.stamina < dodgeCost) {
@@ -177,7 +182,6 @@ function playerDodge() {
   setTimeout(() => opponentAction(true), 1000); // Pass true to indicate dodge attempt
 }
 
-// Opponent attacks, and checks if the player dodged
 function opponentAction(playerDodged = false) {
   if (playerDodged && Math.random() < player.dodgeChance) {
     console.log(`${player.name} dodges the attack!`);
@@ -186,18 +190,16 @@ function opponentAction(playerDodged = false) {
     const hit = attack(opponent, player, attackType);
     displayGraphics(false, hit);
   }
-  
+
   checkForWinner();
   setTimeout(() => gameLoop(), 1000);
 }
 
-// Display health and stamina stats
 function displayStats() {
   console.log(`${opponent.name} has ${colors.red}${opponent.life}${colors.reset} life and ${colors.blue}${opponent.stamina}${colors.reset} stamina.`);
   console.log(`${player.name} has ${colors.green}${player.life}${colors.reset} life and ${colors.blue}${player.stamina}${colors.reset} stamina.`);
 }
 
-// Check if someone has won the match
 function checkForWinner() {
   if (opponent.life <= 0) {
     console.log(`${player.name} wins!`);
@@ -208,19 +210,14 @@ function checkForWinner() {
   }
 }
 
-// Regenerate stamina at the end of each round
-function regenStamina(character) {
-  character.stamina += character.regen;
-  if (character.stamina > 100) {
-    character.stamina = 100;
-  }
+function regenStamina() {
+  player.stamina = Math.min(player.stamina + player.regen, 100);
+  opponent.stamina = Math.min(opponent.stamina + opponent.regen, 100);
 }
 
-// Main game loop
 function gameLoop() {
   displayStats();
-  regenStamina(player);
-  regenStamina(opponent);
+  regenStamina();
   playerAction();
 }
 
